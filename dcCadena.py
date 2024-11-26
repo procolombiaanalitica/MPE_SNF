@@ -1,60 +1,62 @@
 import pandas as pd
 import os
+import Implementacion_SNW as A
 
 path=os.getcwd()
 
-#directorio=r"C:\Users\pgic2\OneDrive - PROCOLOMBIA\MPE\Segundo Semestre\Finales\modelo_potencialidad-main\files3\Base OG\Base prod potenciales.txt"
+#directorio=r"C:\Users\pgic2\OneDrive - PROCOLOMBIA\MPE\Segundo Semestre\Finales\modelo_potencialidad-main\files3\dc_cadena OG\dc_cadena prod potenciales.txt"
 
-base=pd.read_csv("{}/files3/Base prod potenciales.zip".format(path),
-    sep="|",encoding="utf-8",dtype={"Pais":str,"Posición":str,'Descripcion':str})
+dc_cadena= A.base2
+columnas = dc_cadena.columns.to_list()
+columnas_int =[columnas[5],columnas[6],columnas[8],columnas[9],columnas[10],columnas[11]]
+dtype2 = {col: int for col in columnas_int}
 
-agro=base.copy()
-indus=base.copy()
-metalmec=base.copy()
-quimicos=base.copy()
-sm=base.copy()
+dc_cadena = dc_cadena.astype(dtype2)
 
-base_agro=agro[agro["Cadena"]=="Agroalimentos"]
-pos_agro=base_agro["Posición"].unique()
-sub_agro=base_agro["Subsector"].unique()
-sector_agro=base_agro["Sector"].unique()
+agro=dc_cadena.copy()
+indus=dc_cadena.copy()
+metalmec=dc_cadena.copy()
+quimicos=dc_cadena.copy()
+sm=dc_cadena.copy()
 
-base_indus=indus[indus["Cadena"]=="Industrias 4.0"]
-pos_indus=base_indus["Posición"].unique()
-sub_indus=base_indus["Subsector"].unique()
-sector_indus=base_indus["Sector"].unique()
+dc_cadena_agro=agro[agro["Cadena"]=="Agroalimentos"]
+pos_agro=dc_cadena_agro["Posición"].unique()
+sub_agro=dc_cadena_agro["Subsector"].unique()
+sector_agro=dc_cadena_agro["Sector"].unique()
 
+dc_cadena_indus=indus[indus["Cadena"]=="Industrias 4.0"]
+pos_indus=dc_cadena_indus["Posición"].unique()
+sub_indus=dc_cadena_indus["Subsector"].unique()
+sector_indus=dc_cadena_indus["Sector"].unique()
 
-base_metalmec=metalmec[metalmec["Cadena"]=="Metalmecánica y Otras Industrias"]
-pos_metalmec=base_metalmec["Posición"].unique()
-sub_metalmec=base_metalmec["Subsector"].unique()
-sector_metalmec=base_metalmec["Sector"].unique()
+dc_cadena_metalmec=metalmec[metalmec["Cadena"]=="Metalmecánica y Otras Industrias"]
+pos_metalmec=dc_cadena_metalmec["Posición"].unique()
+sub_metalmec=dc_cadena_metalmec["Subsector"].unique()
+sector_metalmec=dc_cadena_metalmec["Sector"].unique()
 
+dc_cadena_quimicos=quimicos[quimicos["Cadena"]=="Químicos y Ciencias de la Vida"]
+pos_quimicos=dc_cadena_quimicos["Posición"].unique()
+sub_quimicos=dc_cadena_quimicos["Subsector"].unique()
+sector_quimicos=dc_cadena_quimicos["Sector"].unique()
 
-
-base_quimicos=quimicos[quimicos["Cadena"]=="Químicos y Ciencias de la Vida"]
-pos_quimicos=base_quimicos["Posición"].unique()
-sub_quimicos=base_quimicos["Subsector"].unique()
-sector_quimicos=base_quimicos["Sector"].unique()
-
-base_sm=sm[sm["Cadena"]=="Sistema Moda"]
-pos_sm=base_sm["Posición"].unique()
-sub_sm=base_sm["Subsector"].unique()
-sector_sm=base_sm["Sector"].unique()
+dc_cadena_sm=sm[sm["Cadena"]=="Sistema Moda"]
+pos_sm=dc_cadena_sm["Posición"].unique()
+sub_sm=dc_cadena_sm["Subsector"].unique()
+sector_sm=dc_cadena_sm["Sector"].unique()
 
 ######################################################Valores para ser visualizados###############################################################
 
-#Se toman los valores de acuerdo a los valores únicos que existe en cada base:
+#Se toman los valores de acuerdo a los valores únicos que existe en cada dc_cadena:
 CadenaPos={'Agroalimentos': pos_agro,"Industrias 4.0":pos_indus,"Metalmecánica y Otras Industrias":pos_metalmec,"Químicos y Ciencias de la Vida":pos_quimicos,"Sistema Moda":pos_sm}
 CadenaSubsector={"Agroalimentos":sub_agro,"Industrias 4.0":sub_indus,"Metalmecánica y Otras Industrias":sub_metalmec,"Químicos y Ciencias de la Vida":sub_quimicos,"Sistema Moda":sub_sm}
 CadenaSector={"Agroalimentos":sector_agro,"Industrias 4.0":sector_indus,"Metalmecánica y Otras Industrias":sector_metalmec,"Químicos y Ciencias de la Vida":sector_quimicos,"Sistema Moda":sector_sm}
 
 #Solución elegante a lo que se está haciendo arriba
-#for cadena in base:
-#    base_cadena=base[base["Cadena"]==cadena]
-#    pos_cadena=base_cadena["Posición"].unique()
-#    sub_cadena=base_cadena["Subsector"].unique()
-#    sector_cadena=base_cadena["Sector"].unique()
+#for cadena in dc_cadena:
+#    dc_cadena_cadena=dc_cadena[dc_cadena["Cadena"]==cadena]
+#    pos_cadena=dc_cadena_cadena["Posición"].unique()
+#    sub_cadena=dc_cadena_cadena["Subsector"].unique()
+#    sector_cadena=dc_cadena_cadena["Sector"].unique()
 #    
 #    CadenaPos[cadena]=pos_cadena
 #    CadenaSubsector[cadena]=sub_cadena
@@ -62,7 +64,8 @@ CadenaSector={"Agroalimentos":sector_agro,"Industrias 4.0":sector_indus,"Metalme
 
 
 
-#########################################################Manera anterior de hacerlo ####################################################################
+######################################################### Manera anterior de hacerlo (Pre-2023) ####################################################################
+
 """
 CadenaPos={'Agroalimentos': ['010110', '010111', '010119', '010120', '010121', '010129', '010130', '010190', '010210', '010221', '010229', '010231', '010239', '010290', '010310', '010391', '010392', '010410', '010420', '010511', '010512', '010513', '010514', '010515', '010519', '010592', '010593', '010594', '010599', '010600', '010611', '010612', '010613', '010614', '010619', '010620', '010631', '010632',
 '010633', '010639', '010641', '010649', '010690', '020110', '020120', '020130', '020210', '020220', '020230', '020311', '020312', '020319', '020321', '020322', '020329', '020410', '020421', '020422', '020423', '020430', '020441', '020442', '020443', '020450', '020500', '020610', '020621', '020622', '020629', '020630', '020641', '020649', '020680', '020690', '020711', '020712', '020713', '020714', '020724', '020725', '020726', '020727', '020732', '020733', '020734', '020735', '020736', '020741', '020742', '020743', '020744', '020745', '020751', '020752', '020753', '020754', '020755', '020760', '020810', '020820', '020830', '020840', '020850', '020860', '020890', '020900', '020910', '020990', '021011', '021012', '021019', '021020', '021090', '021091', '021092', '021093', '021099', '030110', '030111', '030119', '030191', '030192', '030193', '030194', '030195', '030199', '030211', '030212', '030213', '030214', '030219', '030221', '030222', '030223', '030224', '030229', '030231', '030232', '030233', '030234', '030235', '030236', '030239', '030240', '030241', '030242', '030243', '030244', '030245', '030246', '030247', '030249', '030250', '030251', '030252', '030253', '030254', '030255', '030256', '030259', '030261', '030262', '030263', '030264', '030265', '030266', '030267', '030268', '030269', '030270', '030271',

@@ -51,7 +51,7 @@ from snowflake.snowpark import Session
 
 
 # Paso 1: Definir la ruta al archivo JSON en el escritorio
-desktop_path = "c:\\Users\\PGIC2\\OneDrive - PROCOLOMBIA\\Escritorio\\CREDENCIALES"
+desktop_path = os.getcwd()
 json_file_path = os.path.join(desktop_path, "CREDENCIALANALITICA.json")
 json_file_path
  

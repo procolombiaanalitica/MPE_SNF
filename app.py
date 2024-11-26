@@ -65,13 +65,7 @@ dtype2 = {col: int for col in columnas_int}
 
 base2=base2.astype(dtype2)
 
-
-
 #Diccionario de productos,sectores y susbectores x cadena
-
-
-
-
 
 #Puntajes y VCR paises potenciales
 prod_pc=A.prod_pc.set_index("Pais")
